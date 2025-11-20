@@ -33,4 +33,9 @@ React = Smartphone with apps, features, automation.*/
    how to install react - mpm create vite@latest     (in cmd)
                         - give project name 
                         - select React
-                        - select JS                                      */
+                        - select JS                                     
+                        - yall good to go      
+                        - already did all that ,just go to vite-project in desktop and run anything !          
+ */
+
+                        
