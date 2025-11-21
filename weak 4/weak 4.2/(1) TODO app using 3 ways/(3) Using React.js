@@ -37,5 +37,3 @@ React = Smartphone with apps, features, automation.*/
                         - yall good to go      
                         - already did all that ,just go to vite-project in desktop and run anything !          
  */
-
-                        
