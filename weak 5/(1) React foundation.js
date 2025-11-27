@@ -82,7 +82,7 @@ Re-render = React updates the actual DOM to match the new state.
 
 
 //-------------Code of Counter App Using State + Components (Vanilla JS → React Thinking)-------------
-/*
+ /*
 
 ✅ Flow (Very Simple Explanation)
     1️⃣ State variable exists
@@ -106,7 +106,7 @@ Re-render = React updates the actual DOM to match the new state.
     React is just a fancy way to do this:
         State + Component + Re-rendering   
  
--------------------------------------------------------------------
+-----------------------------------Code with state and component (60% React)-----------------------------------
 
 📦 FULL CLEAN CODE (Copy-Paste Ready)
     <!DOCTYPE html>
@@ -176,3 +176,29 @@ Re-render = React updates the actual DOM to match the new state.
             ✔ how state triggers re-renders
 
  */
+
+
+ /*-------------------------------NOW WITH REACT--------App.jsx----------------------------  
+
+import { useState } from "react";
+
+function App() {
+  const [count, setCount] = useState(0); // initial value = 0
+
+  function onClickHandler() {
+    setCount(count + 1);
+  }
+
+  return (
+    <div>
+      <button onClick={onClickHandler}>
+        Counter {count}
+      </button>
+    </div>
+  );
+}
+
+export default App;
+
+*/
+
