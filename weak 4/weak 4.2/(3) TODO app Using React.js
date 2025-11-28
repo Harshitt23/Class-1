@@ -1,4 +1,5 @@
-/*    React is Better Than Direct DOM Manipulatiom. ------------ 
+/*    vese we have studeied react in weak 5 , but tbhi DOM ke baaad react se kese hta h - code daal diya h dekh lo
+            React is Better Than Direct DOM Manipulatiom. ------------ 
             React is not replacing JavaScript.
             React is replacing YOU manually fighting with the DOM.
 
