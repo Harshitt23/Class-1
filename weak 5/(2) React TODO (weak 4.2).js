@@ -7,4 +7,3 @@ its in studyand assignments folder and its named real todo of weak 5. */
 
 
 
-sa
