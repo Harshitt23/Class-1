@@ -1,5 +1,6 @@
 /*                                                  
 *---------------------------------------------------(1) ⚡React Re-rendering -----------------------------------------------------
+
 1️⃣ React kab re-render hota hai?
     State change → setState()
     Props change
@@ -129,8 +130,11 @@ suppose Random = 0.123
 
 
 
+
+
 /*
 *----------------------------------------------------- (2) keys in react-----------------------------------------------------
+
 1. Keys identify elements uniquely during re-renders.
    React uses keys to track which item changed, added, or removed.
 
@@ -212,9 +216,314 @@ export default App;
 
 
 
+
+
 /*
 *----------------------------------------------------- (3) Wrapper Components-----------------------------------------------------
 
+1. A Wrapper Component is a component whose main job
+     is to wrap other components or JSX.
+  
+  2. It doesn’t add its own UI (or adds very little),
+
+
+ ? Example Wrapper Component
+ ? (wraps children with a styled box)
+
+        !    function Card({ children }) {
+        !        return (
+        !       <div style={{ padding: 20, border: "1px solid white", borderRadius: 10 }}>
+        !            {children}
+        !       </div>
+        !        );
+        !     }
+            
+ 
+3. Use-case examples:
+     - Layout wrappers (Page, Section)
+     - UI wrappers (Card, Container, Modal)
+     - Logic wrappers (permission checks, auth guards)
+  
+  
+ 
+ 4. Wrapper Components use "children" prop to render
+    - whatever is passed inside them.
+ 
+  
+  Usage:
+      !  <Card>
+      !      <h1>Hello</h1>
+      !      <p>This content is wrapped!</p>
+      !  </Card>
+  
+  
+ ? 5. Wrapper Components ≠ Higher Order Components.
+    - HOC: wraps logic around components.
+    - Wrapper: wraps UI/layout around children.
+
+
+? ---------------------------------------Code example-------------------------------------------
+import React from "react";
+
+function App() {
+  return (
+    <div>
+      <Card>
+        <h1>Hello Harshit</h1>
+        <p>This content is inside a Wrapper Component.</p>
+      </Card>
+
+      <Card>
+        <h2>Another Card</h2>
+        <p>Wrapper components help reuse layout easily.</p>
+      </Card>
+    </div>
+  );
+}
+
+//Wrapper Component (uses children)
+function Card({ children }) {
+  return (
+    <div style={{
+      padding: "15px",
+      margin: "10px",
+      border: "1px solid white",
+      borderRadius: "10px"
+    }}>
+      {children}
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
+? -------------------------------------------short note ---------------------------------------------
+! ✅ 1. children is NOT a special keyword in JavaScript.
+        React just automatically puts inner content into a prop called children.
+        Example:
+                <Card>
+                <h1>Hello</h1>
+                </Card>
+
+
+     React converts this into:
+             <Card children={<h1>Hello</h1>} />
+
+ So children is just a normal prop — but React fills it automatically.
+
+
+🧪 2. Can you rename it? (YES)
+
+        You can write:
+                function Card({ something }) {
+                return <div>{something}</div>;
+                }
+
+                <Card something={<h1>Hello</h1>} />
+
+    This works perfectly.
+
+BUT…
+Now you must manually pass the inside content:
+            <Card something={<h1>Hello</h1>} />
+
+
+     This destroys the clean wrapper syntax:
+             <Card>
+             <h1>Hello</h1>
+             </Card>
+
+
+*/
+
+
+
+
+
+/*
+*------------------------------------------------------ (4) UseEffect ----------------------------------------------------
+! useEffect - React Hook for side effects
+
+1. Runs after component renders.
+        Syntax:
+        useEffect(() => {
+        side effect code
+        }, []);
+
+
+2. Three types:
+    a) Runs on every render:
+        useEffect(() => {
+        ...
+        });
+
+    b) Runs only once (on mount):
+        useEffect(() => {
+        ...
+        }, []);
+
+    c) Runs when dependencies change:
+        useEffect(() => {
+        ...
+        }, [value]);
+
+
+3. Common use-cases:
+    - API calls
+    - Timers (setTimeout, setInterval)
+    - Event listeners
+    - Subscriptions
+    - Updating document title
+
+
+4. Cleanup function:
+    useEffect(() => {
+    setup
+
+    return () => {
+        cleanup (runs on unmount or before next effect)
+    };
+    }, []);
+
+
+5. Rules:
+    - Dependencies in array must be used inside effect.
+    - Without dependency array → runs every render.
+    - With empty array → runs once.
+    - With values → runs when those values change.
+
+
+ ! TLDR:
+    useEffect = run code after render.
+    [] = once
+    no [] = every render
+    [x] = when x changes
+
+    
+? -------------------✅ useEffect Notes for Polling TODOS (JS Style)---------------------
+ Goal:
+    1. Create an app that polls a server
+    2. Fetches the latest list of TODOs
+    3. Renders those TODOs on the screen
+
+! Polling means repeatedly calling the server every X seconds.
+
+useEffect is used because:
+    - We want the API call to run after the component renders
+    - We want to set up a timer (setInterval)
+    - We want to clean up the timer when the component unmounts
+
+
+Steps:
+    1. useState to store todos
+    2. useEffect to start polling
+    3. Inside useEffect → setInterval to call API repeatedly
+    4. Update todos when API returns new data
+    5. Cleanup function → clearInterval to avoid memory leaks
+
+
+?-----------------------✅ React Example Code (Polling TODO Server)----------------------------
+// Polling Todos App with Todo component
+
+import { useEffect, useState } from "react";
+
+function App() {
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetch("https://your-sum-server.com/todos")
+        .then(res => res.json())
+        .then(data => {
+          setTodos(data.todos || []);
+        })
+        .catch(() => {
+          // handle fetch error silently for now
+        });
+    }, 2000); // polls every 2 sec
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  return (
+    <div>
+      <h1>Todos:</h1>
+      {todos.map(todo => (
+        <Todo
+          key={todo.id}
+          id={todo.id}
+          title={todo.title}
+          description={todo.description}
+        />
+      ))}
+    </div>
+  );
+}
+
+// Todo component accepts title and description and renders them
+function Todo({ id, title, description }) {
+  return (
+    <div style={{ margin: "10px", padding: "10px", border: "1px solid #ccc" }}>
+      <h4>{id}</h4>
+      <h3>{title}</h3>
+      <p>{description}</p>
+    </div>
+  );
+}
+
+export default App;
+
+
+?----------------------------⭐ Extra Notes (JS Style)---------------------------
+Why useEffect for polling?
+    Because polling is a side effect that must run after render.
+
+Why empty dependency array?
+    Because we want to set up the polling only once when component loads.
+
+Why cleanup?
+    To stop the interval when component unmounts. Prevents memory leaks.
+
+How often does polling run?
+    Every X milliseconds depending on setInterval.
+
+What gets updated?
+    The todos state gets new values from the server, triggering a rerender.
+
+Key concept:
+    Rendering should be pure. Polling is not pure → must be inside useEffect.
+*/
+
+
+
+
+
+/*
+*----------------------------------------------------- (4) UseMemo--------------------------------------------------------
+
+
+*/
+
+
+
+
+/*
+*---------------------------------------------------- (4) UseCallBack ---------------------------------------------------
+
+
+*/
+
+
+
+
+
+/*
+*----------------------------------------------------- (4) UseRef -------------------------------------------------------
 
 
 */
