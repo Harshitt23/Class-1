@@ -1,4 +1,4 @@
-/*                                                  
+/*       You will find all codes running in week -6- experiment                                    
 *---------------------------------------------------(1) ⚡React Re-rendering -----------------------------------------------------
 
 1️⃣ React kab re-render hota hai?
@@ -427,7 +427,6 @@ Steps:
 
 ?-----------------------✅ React Example Code (Polling TODO Server)----------------------------
 // Polling Todos App with Todo component
-
 import { useEffect, useState } from "react";
 
 function App() {
@@ -435,10 +434,10 @@ function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch("https://your-sum-server.com/todos")
+      fetch("http://localhost:3001/todos")
         .then(res => res.json())
         .then(data => {
-          setTodos(data.todos || []);
+          setTodos(data || []);
         })
         .catch(() => {
           // handle fetch error silently for now
@@ -468,7 +467,7 @@ function App() {
 // Todo component accepts title and description and renders them
 function Todo({ id, title, description }) {
   return (
-    <div style={{ margin: "10px", padding: "10px", border: "1px solid #ccc" }}>
+    <div style={{ margin: "10px", padding: "10px", border: "2px solid #ccc" }}>
       <h4>{id}</h4>
       <h3>{title}</h3>
       <p>{description}</p>
@@ -477,6 +476,7 @@ function Todo({ id, title, description }) {
 }
 
 export default App;
+
 
 
 ?----------------------------⭐ Extra Notes (JS Style)---------------------------
