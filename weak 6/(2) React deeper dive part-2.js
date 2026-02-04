@@ -7,7 +7,7 @@
         Hooks give functions state, lifecycle, and side effect control.
 
 Important built-in hooks:
-    useState → manages component stat
+    useState → manages component state
     useEffect → handles side effects
     useRef → store values without re-render
     useMemo → memoize values
